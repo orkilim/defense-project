@@ -1,7 +1,23 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+const constants = require("./constants.js");
+const {DB_USER,DB_PASS} = constants;
+const ordersRouter = require('./routes/orders');
+const ingredientsRouter=require('./routes/ingredients')
+
+const dotenv = require('dotenv');
+dotenv.config()
+
 const port=process.env.PORT||7500
-const mongoCon = require("./dbs_connected/mongo_connected");
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@my-cluster.6whyv.mongodb.net/db?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
+.then(()=>{console.log('connected to mongo successfully')})
+.catch((err)=>{
+    if(err)
+        console.log("this is the error:\n"+err)
+})
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -14,18 +30,13 @@ app.use((req,res,next)=>{
 })
 
 
+app.use('/orders', ordersRouter);
+app.use('/ingredients',ingredientsRouter)
 
-const usersRouter = require('./routes/users');
-const petsRouter = require('./routes/pets');
-const socialNetworkRouter = require('./routes/socialNetworks');
-app.use('/users', usersRouter);
-app.use('/pets', petsRouter);
-app.use('/socialNetworks', socialNetworkRouter);
-
-
-//client conction
+//client connction
 app.use(express.static('public'));
 
-//Listening on port 
-const port = process.env.PORT || 5000 ;
-app.listen(port, () => console.log(colors.red.underline.bgBrightWhite(`Server running on port ${port}`)));
+app.listen(port)
+console.log(`listening on port: ${port}`)
+
+
