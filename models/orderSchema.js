@@ -5,7 +5,8 @@ const orderSchema = new mongoose.Schema({
   client:{type:String,required:true},
   pizzaType:{type:String,required:true},
   amount:{type:Number,default:1},
-  price:{type:Number,default:10}
+  price:{type:Number,default:10},
+  coupon:{type:Number,default:0}
 });
 const orderModel = mongoose.model("orders",orderSchema);
 exports.orderModel = orderModel;
