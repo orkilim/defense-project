@@ -30,7 +30,8 @@ const addOrder = async (req, res) => {
                         pizzaType: data[0].ingredient,
                         amount: req.body.amount,
                         price: (Number)(finalPrice),
-                        coupon:req.body.coupon
+                        coupon:req.body.coupon,
+                        sub:req.body.sub
                     })
                         .then(res.status(200).send("order successful"))
                         .catch((err) => {
