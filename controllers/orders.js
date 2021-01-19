@@ -10,10 +10,7 @@ const getOrders = async (req, res) => {
             .catch(err => { res.status(400).json(err); })
     }
     catch (err) {
-        res.status(500).json({
-            status: 500,
-            message: err.message,
-        })
+        res.status(400).send("problem is:\n"+err)
     }
 }
 
@@ -35,14 +32,11 @@ const addOrder = async (req, res) => {
                     .then(res.status(200).send("order successful"))
                     .catch((err) => {
                         if (err)
-                            console.log('be careful:\n' + err)
+                            res.status(400).send('be careful:\n' + err)
                     })
             }
             catch (err) {
-                res.status(500).json({
-                    status: 500,
-                    message: err.message,
-                })
+                res.status(400).send("error is:\n"+err)
             }
         })
 }
@@ -61,13 +55,13 @@ const changeOrder = async (req, res) => {
                     .then(res.status(200).send('order updated'))
                     .catch((err) => {
                         if (err)
-                            console.log("err is:\n" + err)
+                            res.status(400).send("err is:\n" + err)
                     })
 
             })
             .catch((err) => {
                 if (err)
-                    console.log('watch out:\n' + err)
+                    res.status(400).send('watch out:\n' + err)
             })
     }
     catch (err) {
@@ -80,7 +74,7 @@ const deleteOrder = async (req, res) => {
         .then(() => { res.status(200).send("order deleted") })
         .catch((err) => {
             if (err)
-                console.log('problem with deletion:\n' + err)
+                res.status(400).send('problem with deletion:\n' + err)
         })
 }
 

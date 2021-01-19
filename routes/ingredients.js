@@ -13,7 +13,7 @@ router.put("/updateAmount",(req, res) => {
   controller.updateAmount(req, res);
 })
 
-router.delete("/deleteIngredient/:name", (req,res) => {
+router.delete("/deleteIngredient/", (req,res) => {
   controller.deleteIngredient(req, res);
 })
 
