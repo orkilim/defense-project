@@ -33,7 +33,7 @@ const updateAmount = async (req, res) => {
         .then( async (data)=>{
             await ingredientModel.updateOne({id:req.body.id},
                 {
-                    amount:(amount-(req.body.amount))
+                    amount:((data[0].amount)-(req.body.amount))
                 })
         })
     }
