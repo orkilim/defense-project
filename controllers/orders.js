@@ -20,6 +20,7 @@ const getOrders = async (req, res) => {
 const addOrder = async (req, res) => {
     await ingredientModel.find({ id: req.body.ingredientId })
         .then(async (data) => {
+            console.log("this is data:\n\n"+data)
             if (data[0].amount > 0) {
                 const price = data[0].price * req.body.amount
                 const finalPrice = price * ((100 - req.body.coupon) / 100)

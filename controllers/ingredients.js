@@ -29,15 +29,12 @@ const getIngredient = async (req, res) => {
 
 const updateAmount = async (req, res) => {
     try {
-        await ingredientModel.updateOne({id:req.body.id},{
-            amount:req.body.newAmount
-        })
-        .then((data)=>{
-            res.status(200).send('amount changed')
-        })
-        .catch((err)=>{
-            if(err)
-            res.status(400).send('err of updateAmount:\n'+err)
+        await ingredientModel.find({id:req.body.id})
+        .then( async (data)=>{
+            await ingredientModel.updateOne({id:req.body.id},
+                {
+                    amount:(data[0].amount)-1
+                })
         })
     }
     catch (outerErr) {
@@ -67,3 +64,14 @@ module.exports = {
     updateAmount,
     deleteIngredient
 }
+
+/*await ingredientModel.updateOne({id:req.body.id},{
+            amount:null//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        })
+        .then((data)=>{
+            res.status(200).send('amount changed')
+        })
+        .catch((err)=>{
+            if(err)
+            res.status(400).send('err of updateAmount:\n'+err)
+        }) */
