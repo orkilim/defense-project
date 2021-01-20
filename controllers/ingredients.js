@@ -35,6 +35,13 @@ const updateAmount = async (req, res) => {
                 {
                     amount:((data[0].amount)-(req.body.amount))
                 })
+                .then((data)=>{res.status(200).send("amount changed")})
+                .catch((err)=>{
+                    if(err)
+                    {
+                        res.status(400).send("inner problem with updateAmount:\n"+err)
+                    }
+                })
         })
     }
     catch (outerErr) {
@@ -65,13 +72,3 @@ module.exports = {
     deleteIngredient
 }
 
-/*await ingredientModel.updateOne({id:req.body.id},{
-            amount:null//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        })
-        .then((data)=>{
-            res.status(200).send('amount changed')
-        })
-        .catch((err)=>{
-            if(err)
-            res.status(400).send('err of updateAmount:\n'+err)
-        }) */
